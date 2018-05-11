@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Proximity menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
+    <script src="main.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-smooth: always;
+            -webkit-font-smoothing: always;
+            -moz-osx-font-smoothing: always;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #91AFC9;
+            background-color: #ddc5d1;
+            height: 100vh;
+            font-size: 2em;
+        }
+
+        .menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            transform: translateX(100%);
+            width: 300px;
+            background-color: #366B8E;
+            color: #ADCEED;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .menu li {
+            font-size: 2rem;
+            list-style-type: none;
+            padding: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        MOVE YOUR MOUSE TO THE RIGHT
+    </div>
+
+    <div id="menu" class="menu">
+        <ul>
+            <li>Title</li>
+            <li>Section</li>
+            <li>Item</li>
+            <li>About</li>
+        </ul>
+
+    </div>
+</body>
+
+</html>

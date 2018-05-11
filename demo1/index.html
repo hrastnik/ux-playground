@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Change text color depending on background</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
+    <script src="main.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-smooth: always;
+            -webkit-font-smoothing: always;
+            -moz-osx-font-smoothing: always;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .section {
+            height: 80vh;
+        }
+
+        .background-dark {
+            background-color: #365149
+        }
+
+        .background-light {
+            background-color: #c9fafa
+        }
+
+        .menu {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: #365149;
+            font-size: 2em
+        }
+
+        .menu li {
+            list-style-type: none;
+            padding: 1rem 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="section background-light"></div>
+    <div class="section background-dark"></div>
+    <div class="section background-light"></div>
+    <div class="section background-dark"></div>
+    <div class="section background-light"></div>
+    <div class="section background-dark"></div>
+
+    <div class="menu" id="menu">
+        <ul>
+            <li>This text</li>
+            <li>Changes color</li>
+            <li>Depending</li>
+            <li>On it's</li>
+            <li>Background</li>
+        </ul>
+    </div>
+
+
+
+</body>
+
+</html>

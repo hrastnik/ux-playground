@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Image revealer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
+    <script src="main.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-smooth: always;
+            -webkit-font-smoothing: always;
+            -moz-osx-font-smoothing: always;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        h2 {
+            color: #0051B7;
+            font-weight: 400;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #D1E6FC;
+            flex-direction: column;
+        }
+
+        .content img {
+            width: 50vh;
+            height: 50vh;
+        }
+
+        .images {
+            display: flex;
+            justify-content: space-around;
+            width: 100vw;
+        }
+
+        .image-reveal {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-reveal__inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* transition: all 1s; */
+        }
+
+        .image-reveal__door--top {
+            position: absolute;
+            background-color: #006EF1;
+            left: -21%;
+            right: -21%;
+            top: -21%;
+            bottom: 50%;
+        }
+
+        .image-reveal__door--right {
+            position: absolute;
+            background-color: #0051B7;
+            top: -21%;
+            bottom: -21%;
+            left: 50%;
+            right: -21%;
+        }
+
+        .image-reveal__door--bottom {
+            position: absolute;
+            background-color: #65A3F0;
+            left: -21%;
+            right: -21%;
+            top: 50%;
+            bottom: -21%;
+        }
+
+        .image-reveal__door--left {
+            position: absolute;
+            background-color: #ABCDF7;
+            top: -21%;
+            bottom: -21%;
+            left: -21%;
+            right: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+
+        <h2>HOVER TO REVEAL IMAGE</h2>
+
+        <div class="images">
+            <div class="image-reveal">
+                <img src="pink.png" alt="The Cube" width="530" height="533" />
+                <div class="image-reveal__inner">
+                    <div class="image-reveal__door image-reveal__door--right"></div>
+                    <div class="image-reveal__door image-reveal__door--bottom"></div>
+                    <div class="image-reveal__door image-reveal__door--left"></div>
+                    <div class="image-reveal__door image-reveal__door--top"></div>
+                </div>
+            </div>
+
+            <div class="image-reveal">
+                <img src="blue.jpg" alt="The Cube" width="530" height="533" />
+                <div class="image-reveal__inner">
+                    <div class="image-reveal__door image-reveal__door--right"></div>
+                    <div class="image-reveal__door image-reveal__door--bottom"></div>
+                    <div class="image-reveal__door image-reveal__door--left"></div>
+                    <div class="image-reveal__door image-reveal__door--top"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
