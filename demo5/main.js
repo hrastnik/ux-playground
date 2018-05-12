@@ -7,11 +7,14 @@ document.addEventListener("DOMContentLoaded", function() {
   const rad2deg = 57.2957795;
   var K = 0;
   var tween;
-  window.addEventListener("mousemove", function(event) {
+
+  function onMouseMove() {
     // Calculating mouseAngle this way makes the angle be 0 at the top
     // and increase clockwise
-    const dx = compassX - event.clientX;
-    const dy = event.clientY - compassY;
+    const clientX = event.clientX || event.touches[0].clientX;
+    const clientY = event.clientY || event.touches[0].clientY;
+    const dx = compassX - clientX;
+    const dy = clientY - compassY;
     const mouseAngle = Math.atan2(dx, dy) * rad2deg + 180;
 
     const boxAngleNoMod = tween === undefined ? 0 : tween.vars.css.rotation;
@@ -26,5 +29,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const target = mouseAngle + K * 360;
     tween = TweenMax.to(compass, 0.6, { rotation: target });
-  });
+  }
+
+  window.addEventListener("mousemove", onMouseMove);
+  window.addEventListener("touchmove", onMouseMove);
 });
