@@ -4,12 +4,17 @@
 
 body {
   margin: 0;
-  font-smooth: always;
   -webkit-font-smoothing: always;
   -moz-osx-font-smoothing: always;
   font-family: "Montserrat", sans-serif;
   color: rgba(0, 0, 0, 0.8);
   font-size: 1.5em;
+  overflow: scroll scroll;
+  height: 100vh;
+}
+
+.scene-wrap {
+  display: inline-block;
 }
 
 .content {
@@ -17,7 +22,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
   text-align: center;
 }
 
@@ -29,6 +35,10 @@ body {
   background-color: #34c464;
 }
 
+.content--pink {
+  background-color: #ff9af3;
+}
+
 a {
   color: inherit;
   transition: 0.2s all;
@@ -38,15 +48,4 @@ a {
 
 a:hover {
   letter-spacing: 1.2px;
-}
-
-.transitioner {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 100%;
-  left: 0;
-  transition: 0ms all;
-  background-color: #f24859;
-  z-index: 100;
 }

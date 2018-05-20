@@ -17,6 +17,7 @@ var hTransition = (function() {
 
     this.startTransition = options.startTransition;
     this.endTransition = options.endTransition;
+    this.destroyAfterEndTransition = options.destroyAfterEndTransition || false;
 
     this.bindToAnchors();
 
@@ -26,7 +27,7 @@ var hTransition = (function() {
   hTransition.prototype.bindToAnchors = function() {
     // debugger;
     var anchorElements = document.querySelectorAll("a");
-    console.log("Binding to elements: ", anchorElements);
+
     for (var i = 0; i < anchorElements.length; i++) {
       var anchorElement = anchorElements[i];
       anchorElement.addEventListener(
@@ -52,7 +53,7 @@ var hTransition = (function() {
     request.open("GET", href, true);
     request.send();
 
-    this.startTransition(this.activeDocument, this.onStartTransitionDone);
+    this.startTransition(anchorElement, this.onStartTransitionDone);
   };
 
   hTransition.prototype.handlePopState = function(event) {
@@ -60,6 +61,7 @@ var hTransition = (function() {
     if (href == null) return;
 
     event.preventDefault();
+    this.startTransition(event.srcElement.location, this.onStartTransitionDone);
 
     this.nextURL = href;
 
@@ -70,8 +72,6 @@ var hTransition = (function() {
     );
     request.open("GET", href, true);
     request.send();
-
-    this.startTransition(this.activeDocument, this.onStartTransitionDone);
   };
 
   hTransition.prototype.onStartTransitionDone = function() {
@@ -91,12 +91,17 @@ var hTransition = (function() {
     var nextScene = this.nextDocument.querySelector("#active-scene");
     var nextHead = this.nextDocument.head;
 
-    this.replaceHeadWithoutReplacingUnion(activeHead, nextHead);
-    replaceElement(activeScene, nextScene);
+    if (this.destroyAfterEndTransition) {
+      this.endTransition();
+      this.replaceHeadWithoutReplacingUnion(activeHead, nextHead);
+      replaceElement(activeScene, nextScene);
+    } else {
+      this.replaceHeadWithoutReplacingUnion(activeHead, nextHead);
+      replaceElement(activeScene, nextScene);
+      this.endTransition();
+    }
 
     this.bindToAnchors();
-
-    this.endTransition(this.activeDocument);
 
     // Reset everything
     this.nextDocument = undefined;
