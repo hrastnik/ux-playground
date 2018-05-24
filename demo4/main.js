@@ -1,85 +1,90 @@
 /**
- * JS Transition
- */
-// document.addEventListener("DOMContentLoaded", function() {
-//   new hTransition({
-//     startTransition: function(anchorElement, done) {
-//       TweenMax.to(document.body, 1, { opacity: 0, onComplete: done });
-//     },
-//     endTransition: function(newDocument, done) {
-//       TweenMax.fromTo(
-//         newDocument.body,
-//         1,
-//         { opacity: 0 },
-//         { opacity: 1, onComplete: done }
-//       );
-//     }
-//   });
-// });
-
-/**
  *  Transition
  */
+
+function elementPositionDelta(el1, el2) {
+  var box1 = el1.getBoundingClientRect();
+  var box2 = el2.getBoundingClientRect();
+  return {
+    x: box2.left - box1.left,
+    y: box2.top - box1.top
+  };
+}
+
 document.addEventListener("DOMContentLoaded", function() {
-  new hTransition({
-    // Define how the active page will leave
-    // we need to call done() when the animations are over
-    // Calling done() removes the #active-scene element and replaces it
-    // with the contents of the #active-scene element from the new page.
-    startTransition: function(anchorElement, done) {
-      var path = window.location.pathname;
-      var scene = document.querySelector("#active-scene");
+  new Trauma([
+    {
+      from: /page/,
+      to: /page/,
+      // Shared element tranistion
+      start: (replace, insert, oldScene) => {
+        // Grab the reference to the element in the old scene
+        this.oldImage = oldScene.querySelector("img");
 
-      var isHomepage = path === "/" || path.indexOf("index") !== -1;
-      var isPage1 = path.indexOf("page1") !== -1;
-      var isPage2 = path.indexOf("page2") !== -1;
+        // Animate old scene content away
+        var content = oldScene.querySelectorAll(":not(img)");
+        TweenMax.staggerTo(
+          content,
+          0.5,
+          {
+            x: window.innerWidth + "px",
+            ease: Power3.easeIn
+          },
+          0.2,
+          insert // Once we're done, insert the new scene behind the old one
+        );
+      },
+      finish: (done, newScene, oldScene) => {
+        // Grab the reference to the element in the new scene
+        var newImage = newScene.querySelector("img");
 
-      switch (true) {
-        case isHomepage: {
-          TweenMax.to(scene, 1, { height: 0, onComplete: done });
-          break;
+        // Calculate the difference in position
+        var d = elementPositionDelta(this.oldImage, newImage);
+        // Translate the old image to the new position
+        TweenMax.to(this.oldImage, 0.8, {
+          x: d.x,
+          y: d.y,
+          ease: Power3.easeInOut,
+          onComplete: fade
+        });
+        // Fade out the old scene to reveal the new one
+        function fade(params) {
+          TweenMax.to(oldScene, 0.3, {
+            opacity: 0,
+            onComplete: done // call done in the end
+          });
         }
-        case isPage1: {
-          TweenMax.to(scene, 1, { scale: 0, onComplete: done });
-          break;
-        }
-        case isPage2: {
-          TweenMax.to(scene, 1, { x: "-100%", onComplete: done });
-          break;
-        }
-        default:
-          console.log("boom");
-          done();
       }
     },
-    // Define how the next page will enter
-    // We need to call done() when the animations are over
-    endTransition: function(newDocument, done) {
-      var path = window.location.pathname;
-
-      switch (true) {
-        case path.indexOf("page1") !== -1: {
-          TweenMax.fromTo(
-            document.body,
-            1,
-            { opacity: 0 },
-            { opacity: 1, onComplete: done }
-          );
-          break;
-        }
-        case path.indexOf("page2") !== -1: {
-          TweenMax.fromTo(
-            document.body,
-            1,
-            { opacity: 0, rotation: 360 },
-            { opacity: 1, rotation: 0, onComplete: done }
-          );
-          break;
-        }
-        default: {
-          TweenMax.from(document.body, 1, { x: "-100%", onComplete: done });
-        }
+    {
+      from: /^\/$|index/,
+      to: /page/,
+      start: (replace, insert, oldScene) => {
+        insert();
+      },
+      finish: (done, newScene, oldScene) => {
+        var bodyStyle = document.body.style;
+        var originalBodyOverflow = bodyStyle.overflow;
+        bodyStyle.overflow = "hidden";
+        TweenMax.to(oldScene, 1, { x: "-100%", ease: Power3.easeIn });
+        TweenMax.from(newScene, 1, {
+          x: "100%",
+          ease: Power3.easeIn,
+          onComplete: function() {
+            bodyStyle.overflow = originalBodyOverflow;
+            done();
+          }
+        });
+      }
+    },
+    {
+      from: /.*/,
+      start: (replace, insertNext, oldScene) => {
+        TweenMax.to(oldScene, 0.5, { opacity: 0, onComplete: replace });
+      },
+      finish: (done, newScene, oldScene) => {
+        TweenMax.from(newScene, 0.5, { opacity: 0, onComplete: done });
       }
     }
-  });
+  ]);
 });
