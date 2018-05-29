@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.5em;
+  color: rgba(0, 0, 0, 0.85);
+  margin: 0;
+}
+
+a {
+  padding: 2pt;
+  margin-top: 16pt;
+  color: inherit;
+  text-decoration: inherit;
+}
+a:before,
+a:after {
+  content: " - ";
+}
+
+.section {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.section--red {
+  background-color: rgb(250, 150, 150);
+}
+
+.section--yellow {
+  background-color: rgb(255, 255, 141);
+}
+
+.section--green {
+  background-color: rgb(141, 255, 170);
+}
